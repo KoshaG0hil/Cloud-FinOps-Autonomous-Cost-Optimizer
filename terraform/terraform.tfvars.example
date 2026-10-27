@@ -1,0 +1,8 @@
+aws_region          = "us-east-1"
+environment         = "production"
+project_name        = "cloud-finops"
+dry_run_mode        = true
+enable_slack_alerts = false
+slack_webhook_url   = ""
+off_hours_stop_cron = "cron(0 19 ? * MON-FRI *)"
+on_hours_start_cron = "cron(0 7 ? * MON-FRI *)"

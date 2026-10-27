@@ -1,0 +1,51 @@
+version: "1.0.0"
+environment: "production"
+
+rules:
+  unattached_ebs:
+    enabled: true
+    min_unattached_days: 7
+    create_backup_snapshot_before_delete: true
+    estimated_cost_per_gb_month: 0.08  # gp3 standard
+    action: "ARCHIVE_SNAPSHOT_THEN_DELETE"
+
+  orphaned_snapshots:
+    enabled: true
+    max_age_days: 90
+    exempt_tags:
+      - "RetainIndefinitely"
+      - "ComplianceArchive"
+    estimated_cost_per_gb_month: 0.05
+    action: "DELETE_ORPHANED_SNAPSHOT"
+
+  idle_ec2_instances:
+    enabled: true
+    cpu_utilization_threshold_percent: 5.0
+    network_io_threshold_mb_daily: 10.0
+    evaluation_period_days: 14
+    target_action: "AUTO_PARK_OR_RIGHTSIZE"
+    auto_stop_non_prod: true
+
+  idle_rds_databases:
+    enabled: true
+    max_idle_days: 7
+    connection_count_threshold: 0
+    auto_pause_serverless: true
+    stop_dev_clusters_off_hours: true
+
+  tag_governance:
+    enabled: true
+    mandatory_tags:
+      - "Environment"
+      - "Owner"
+      - "CostCenter"
+      - "Project"
+    action: "FLAG_NON_COMPLIANT_AND_ALERT"
+
+  schedule_autoparking:
+    enabled: true
+    off_hours_cron: "cron(0 19 ? * MON-FRI *)"   # 7:00 PM Weekdays (Stop)
+    on_hours_cron: "cron(0 7 ? * MON-FRI *)"    # 7:00 AM Weekdays (Start)
+    target_tag_filter:
+      Key: "AutoPark"
+      Value: "true"

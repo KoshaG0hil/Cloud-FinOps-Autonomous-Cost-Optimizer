@@ -1,0 +1,51 @@
+{
+  "manifest_id": "finops-sample-1793060000",
+  "generated_at": "2026-10-26T20:50:00.000Z",
+  "dry_run": true,
+  "sha256_checksum": "b2690c0f94f6a0d511d2be92bcf7d864d61b89dc189aa0e3a0a15e0f4968d9c8",
+  "summary": {
+    "total_scanned_monthly_spend": 5380.0,
+    "total_projected_monthly_savings": 1842.0,
+    "total_projected_annual_savings": 22104.0,
+    "waste_percentage": 34.2,
+    "category_breakdown": {
+      "UNATTACHED_EBS": 640.0,
+      "IDLE_EC2": 1050.0,
+      "AGED_SNAPSHOT": 152.0
+    },
+    "findings_count_by_status": {
+      "DRY_RUN_REMEDIATED": 5,
+      "IDENTIFIED": 8
+    }
+  },
+  "findings": [
+    {
+      "finding_id": "finops-ebs-210a",
+      "category": "UNATTACHED_EBS",
+      "resource_type": "EBS_VOLUME",
+      "resource_id": "vol-08a7b6c5d4e3f210a",
+      "current_monthly_spend": 40.0,
+      "projected_monthly_savings": 40.0,
+      "recommended_action": "SNAPSHOT_AND_DELETE",
+      "status": "DRY_RUN_REMEDIATED",
+      "details": {
+        "size_gb": 500,
+        "simulated_backup_snapshot": "snap-safety-210a"
+      }
+    },
+    {
+      "finding_id": "finops-idle-park-43210",
+      "category": "IDLE_EC2",
+      "resource_type": "EC2_INSTANCE",
+      "resource_id": "i-0a8b9c7d6e5f43210",
+      "current_monthly_spend": 140.0,
+      "projected_monthly_savings": 91.0,
+      "recommended_action": "SCHEDULE_NIGHTLY_PARKING",
+      "status": "DRY_RUN_REMEDIATED",
+      "details": {
+        "cpu_utilization": 2.1,
+        "environment": "development"
+      }
+    }
+  ]
+}
