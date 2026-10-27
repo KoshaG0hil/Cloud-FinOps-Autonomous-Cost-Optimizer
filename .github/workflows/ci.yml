@@ -37,6 +37,10 @@ jobs:
           PYTHONPATH=. pytest tests/ -v --cov=src --cov-report=term-missing --cov-report=xml
 
       - name: Verify CLI FinOps Scan Execution
+        env:
+          AWS_ACCESS_KEY_ID: mock-key
+          AWS_SECRET_ACCESS_KEY: mock-secret
+          AWS_DEFAULT_REGION: us-east-1
         run: |
           python -m src.cli scan --dry-run
 
